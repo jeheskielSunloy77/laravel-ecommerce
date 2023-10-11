@@ -19,10 +19,10 @@ class ProductsSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             Product::create([
                 'id' => fake()->uuid(),
-                'name' => fake()->sentence(3),
+                'name' => fake()->sentence(2),
                 'price' => fake()->randomFloat(2, 1, 10),
-                'description' => fake()->sentence(10),
-                'image' => fake()->imageUrl(640, 480, 'animals', true),
+                'description' => fake()->paragraph(20),
+                'image' => fake()->imageUrl(640, 480,),
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }

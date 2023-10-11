@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = ['name', 'price', 'description', 'image'];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string'; // This is important to indicate the type of the primary key
 
+    public $incrementing = false; // This is important to indicate that the ID is not auto-incrementing
     public $timestamps = true;
 }
