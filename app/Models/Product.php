@@ -12,4 +12,9 @@ class Product extends Model
 
     public $incrementing = false; // This is important to indicate that the ID is not auto-incrementing
     public $timestamps = true;
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
