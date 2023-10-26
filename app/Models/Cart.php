@@ -11,6 +11,12 @@ class Cart extends Model
         'product_id',
         'quantity',
     ];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+    public $timestamps = true;
+
 
     public function user()
     {
