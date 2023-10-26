@@ -35,7 +35,9 @@
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input type="text" placeholder="Search for products" class="block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-amber-50 border-2 border-black pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-amber-50 dark:text-gray-300 dark:border-gray-600">
+                <form class="w-full block">
+                    <input name="search" type="text" placeholder="Search for products" class="w-full block py-2.5 text-gray-700 placeholder-gray-400/70 bg-amber-50 border-2 border-black pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-amber-50 dark:text-gray-300 dark:border-gray-600" value="{{request('search')}}">
+                </form>
             </div>
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->

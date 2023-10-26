@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $products = Product::all();
+        $products = null;
+
+        if ($request->query('search')) {
+            $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->get();
+        } else {
+            $products = Product::all();
+        }
+
         return view('products.index', compact('products'));
     }
 
