@@ -1,5 +1,6 @@
 @php
-$cart=auth()->user()->carts;
+$user=auth()->user();
+$cart= $user ? $user -> carts : null;
 @endphp
 
 
@@ -17,8 +18,8 @@ $cart=auth()->user()->carts;
     <nav class="fixed top-0 w-full bg-amber-50">
         <div class="container relative px-6 py-2 mx-auto md:flex md:justify-between md:items-center">
             <div class="flex items-center justify-between">
-                <a href="/">
-                    <div class="w-full text-red-700 text-2xl font-semibold">M&amp;H Inc.</div>
+                <a href="/products">
+                    <div class="w-full text-red-700 text-2xl font-semibold">Tokolaravel</div>
                 </a>
 
                 <!-- Mobile menu button -->
@@ -47,47 +48,49 @@ $cart=auth()->user()->carts;
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
             <div class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center gap-2">
-                @if(Auth::user())
+                @if($user)
                 <div class="flex justify-center md:block">
-                    <a class="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300" href="/carts">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                        </svg>
+                    <a class="relative transform transition-all" href="/carts">
+                        <button class="flex items-center gap-2 transition-all hover:shadow-[4px_4px_black] p-1.5 border border-transparent hover:border-black">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M7 22q-.825 0-1.413-.588T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.588 1.413T7 22Zm10 0q-.825 0-1.413-.588T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.588 1.413T17 22ZM6.15 6l2.4 5h7l2.75-5H6.15ZM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.738.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.988t-.05-1.962L6.6 11.6L3 4H1V2h3.25l.95 2Zm3.35 7h7h-7Z" />
+                            </svg>
+                        </button>
                         @if($cart->count())
-                        <span class="absolute top-0 left-0 p-1 text-xs text-white bg-lime-500 rounded-full">
+                        <span class="absolute top-1 left-1 p-1 text-xs text-white bg-lime-500 rounded-full">
                         </span>
                         @endif
                     </a>
                 </div>
                 <div id="profile-dropdown-wrapper" class="relative">
-                    <button id="profile-dropdown-buttton" class="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <button id="profile-dropdown-buttton" class="flex items-center gap-2 transition-all hover:shadow-[4px_4px_black] p-1.5 border border-transparent hover:border-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 12q-1.65 0-2.825-1.175T8 8q0-1.65 1.175-2.825T12 4q1.65 0 2.825 1.175T16 8q0 1.65-1.175 2.825T12 12Zm-8 8v-2.8q0-.85.438-1.563T5.6 14.55q1.55-.775 3.15-1.163T12 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20H4Zm2-2h12v-.8q0-.275-.138-.5t-.362-.35q-1.35-.675-2.725-1.012T12 15q-1.4 0-2.775.338T6.5 16.35q-.225.125-.363.35T6 17.2v.8Zm6-8q.825 0 1.413-.588T14 8q0-.825-.588-1.413T12 6q-.825 0-1.413.588T10 8q0 .825.588 1.413T12 10Zm0-2Zm0 10Z" />
                         </svg>
                     </button>
                     <div id="profile-dropdown" class="hidden text-center z-10 absolute bg-amber-50 divide-y divide-black rounded-sm border border-black shadow-[4px_4px_#000] w-44 top-8 left-1/2 transform -translate-x-1/2">
                         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             <div>
-                                {{Auth::user()->name}}
+                                {{$user->name}}
                             </div>
                             <div class="font-medium truncate">
-                                {{Auth::user()->email}}
+                                {{$user->email}}
                             </div>
                         </div>
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+                        <ul class="py-2 text-sm" aria-labelledby="dropdownInformationButton">
                             <li>
-                                <a href="/profile" class="block px-4 py-2 hover:bg-lime-300">Profile</a>
+                                <a href="/profile" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Profile</a>
                             </li>
                             <li>
-                                <a href="/wishlist" class="block px-4 py-2 hover:bg-lime-300">Wishlist</a>
+                                <a href="/wishlist" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Wishlist</a>
                             </li>
                             <li>
-                                <a href="/transactions" class="block px-4 py-2 hover:bg-lime-300">Transactions</a>
+                                <a href="/transactions" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Transactions</a>
                             </li>
                         </ul>
                         <form method="POST" action="{{ route('logout')}}" class="py-2">
                             @csrf
-                            <input type="submit" value="Logout" class="w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-300  cursor-pointer" />
+                            <input type="submit" value="Logout" class="w-full px-4 py-2 text-sm hover:bg-red-300 border-y border-transparent hover:border-black cursor-pointer" />
                         </form>
                     </div>
                 </div>
@@ -105,9 +108,8 @@ $cart=auth()->user()->carts;
     </div>
     <footer class="">
         <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
-            <a href="/">
-                <div class="w-full text-red-700 text-2xl font-semibold">M&amp;H Inc.</div>
-
+            <a href="/products">
+                <div class="w-full text-red-700 text-2xl font-semibold">Tokolaravel</div>
             </a>
 
             <p class="text-sm text-gray-600 dark:text-gray-300">© Copyright 2021. All Rights Reserved.</p>
