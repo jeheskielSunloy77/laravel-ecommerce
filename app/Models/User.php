@@ -22,6 +22,13 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+    public $timestamps = true;
+
+
 
     /**
      * The attributes that should be hidden for serialization.
