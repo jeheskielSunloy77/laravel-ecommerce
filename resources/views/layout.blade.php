@@ -51,13 +51,39 @@
                         <span class="absolute top-0 left-0 p-1 text-xs text-white bg-lime-500 rounded-full"></span>
                     </a>
                 </div>
-                <a href="/profile" class="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {{Auth::user()->name}}
+                <div id="profile-dropdown-wrapper" class="relative">
+                    <button id="profile-dropdown-buttton" class="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                    <div id="profile-dropdown" class="hidden text-center z-10 absolute bg-amber-50 divide-y divide-black rounded-sm border border-black shadow-[4px_4px_#000] w-44 top-8 left-1/2 transform -translate-x-1/2">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div>
+                                {{Auth::user()->name}}
+                            </div>
+                            <div class="font-medium truncate">
+                                {{Auth::user()->email}}
+                            </div>
+                        </div>
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+                            <li>
+                                <a href="/profile" class="block px-4 py-2 hover:bg-lime-300">Profile</a>
+                            </li>
+                            <li>
+                                <a href="/wishlist" class="block px-4 py-2 hover:bg-lime-300">Wishlist</a>
+                            </li>
+                            <li>
+                                <a href="/transactions" class="block px-4 py-2 hover:bg-lime-300">Transactions</a>
+                            </li>
+                        </ul>
+                        <form method="POST" action="{{ route('logout')}}" class="py-2">
+                            @csrf
+                            <input type="submit" value="Logout" class="w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-300  cursor-pointer" />
+                        </form>
+                    </div>
+                </div>
 
-                </a>
                 @else
                 <a href="/login">
                     <button class="border font-mono p-2 w-1/3 bg-lime-300 border-black shadow-[4px_4px_#000] lg:w-24">Login</button>
@@ -103,5 +129,21 @@
         </div>
     </footer>
 </body>
+
+<script>
+    const profileDropdownWrapper = document.getElementById('profile-dropdown-wrapper');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const profileDropdownButton = document.getElementById('profile-dropdown-buttton');
+
+    profileDropdownButton.onclick = function() {
+        profileDropdown.classList.toggle('hidden');
+    }
+
+    window.onclick = function(event) {
+        if (event.target !== profileDropdownWrapper && !profileDropdownWrapper.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
+    }
+</script>
 
 </html>
