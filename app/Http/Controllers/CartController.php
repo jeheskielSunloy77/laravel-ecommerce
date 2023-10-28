@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CartController extends Controller
@@ -13,7 +14,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        return view('carts.index')->with([
+            'carts' => auth()->user()->carts,
+        ]);
     }
 
     /**
@@ -30,11 +33,11 @@ class CartController extends Controller
     public function store(Request $request)
     {
         Cart::create([
-            'id' => Str::uuid(),
-            'user_id' => $request->user()->id,
+            'user_id' => auth()->id(),
             'product_id' => $request->query('product_id'),
             'quantity' => $request->query('quantity') ?? 1,
         ]);
+        return back();
     }
 
     /**
@@ -58,7 +61,12 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        $body = $request->validate([
+            'quantity' => 'required|numeric|min:1',
+        ]);
+
+        $cart->update($body);
+        return redirect()->route('carts.index');
     }
 
     /**
@@ -67,5 +75,6 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         $cart->delete();
+        return back();
     }
 }
