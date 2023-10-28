@@ -4,8 +4,12 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Database\Seeder;
+use SebastianBergmann\CodeUnitReverseLookup\Wizard;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,22 +18,65 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::query()->delete();
+        $userIds = [];
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $id = fake()->uuid();
+            $userIds[] = $id;
+            if ($i == 1) {
+                User::factory()->create([
+                    'id' => $id,
+                    'name' => 'admin',
+                    'email' => 'admin@admin.com',
+                    'password' => 'admin',
+                ]);
+            } else {
+                User::factory()->create([
+                    'id' => $id,
+                ]);
+            }
+        }
+
 
         Product::query()->delete();
+        $productIds = [];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
+            $id = fake()->uuid();
+            $productIds[] = $id;
+
             Product::create([
-                'id' => fake()->uuid(),
+                'id' => $id,
                 'name' => fake()->sentence(2),
                 'price' => fake()->randomFloat(2, 1, 10),
                 'description' => fake()->paragraph(20),
-                'image' => fake()->imageUrl(640, 480,),
+                'image' => 'https://picsum.photos/seed/' . $i . '/640/480',
+                'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            ]);
+        }
+
+        Cart::query()->delete();
+
+        for ($i = 1; $i <= 10; $i++) {
+            Cart::create([
+                'id' => fake()->uuid(),
+                'user_id' => fake()->randomElement($userIds),
+                'product_id' => fake()->randomElement($productIds),
+                'quantity' => fake()->numberBetween(1, 10),
+                'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            ]);
+        }
+
+
+        Wishlist::query()->delete();
+
+        for ($i = 1; $i <= 15; $i++) {
+            Wishlist::create([
+                'id' => fake()->uuid(),
+                'user_id' => fake()->randomElement($userIds),
+                'product_id' => fake()->randomElement($productIds),
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }
