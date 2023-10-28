@@ -2,7 +2,20 @@
 
 @section('title', 'Products List')
 
+@php
+$categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewelery','electronics','kids','furniture','books','cosmetics','health','toys','grocery','stationary'];
+@endphp
+
 @section('content')
+<div class="flex items-center justify-between mx-auto mb-4">
+    @foreach($categories as $category)
+    <a href="{{url('/products?category=' . $category)}}">
+        <div class="border border-black px-4 py-2 transition-all {{request('category') == $category ? 'bg-lime-300 shadow-[4px_4px_black]' : 'hover:shadow-[4px_4px_black]'}}">
+            {{ $category }}
+        </div>
+    </a>
+    @endforeach
+</div>
 <div class="grid 2xl:grid-cols-4 grid-cols-4 gap-4">
     @foreach($products as $product)
     <a href="{{ url('/products/' . $product->id ) }}">

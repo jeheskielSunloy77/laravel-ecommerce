@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
                 'price' => fake()->randomFloat(2, 1, 10),
                 'description' => fake()->paragraph(20),
                 'image' => 'https://picsum.photos/seed/' . $i . '/640/480',
+                'category' => fake()->randomElement(['clothes', 'shoes', 'sports wear', 'bags', 'hats', 'watches', 'jewelery', 'electronics', 'kids', 'furniture', 'books', 'cosmetics', 'health', 'toys', 'grocery', 'stationary']),
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }

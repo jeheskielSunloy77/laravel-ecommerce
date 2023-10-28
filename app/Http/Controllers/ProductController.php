@@ -13,6 +13,8 @@ class ProductController extends Controller
 
         if ($request->query('search')) {
             $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->get();
+        } elseif ($request->query('category')) {
+            $products = Product::where('category', $request->query('category'))->get();
         } else {
             $products = Product::all();
         }
