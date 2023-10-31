@@ -1,0 +1,1 @@
+<div class="w-full text-red-700 text-2xl font-semibold" {{$attributes}}>Tokolaravel</div>
