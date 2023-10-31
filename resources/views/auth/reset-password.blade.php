@@ -1,39 +1,25 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+@section('title', 'Reset Password')
+
+@php
+$isError=!$errors->isEmpty();
+@endphp
+
+<x-app-layout isGuest>
+    <form method="POST" action="{{ route('password.store') }}" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 border border-black shadow-[4px_4px_black] w-1/4">
         @csrf
-
-        <!-- Password Reset Token -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
+        <div class="space-y-4">
+            <div class="text-center">
+                <h2 class="text-lg font-bold">RESET PASSWORD</h2>
+                <p class="text-center">
+                    Please register using your email and password or if you already have an account, you can
+                    <a href="{{route('login')}}" class="font-semibold text-lime-600 hover:underline">login</a>.
+                </p>
+            </div>
+            <x-text-field label="Email" type="email" id="email" name="email" required placeholder="someone@email.com" :errors="$errors->get('email')" />
+            <x-text-field label="Password" type="password" id="password" minlength="8" name="password" required placeholder="xxxxxxxxxxxxxx" :errors="$errors->get('password')" />
+            <x-text-field label="Password Confirmation" type="password" minlength="8" id="password_confirmation" name="password_confirmation" required placeholder="xxxxxxxxxxxxxx" :errors="$errors->get('password_confirmation')" />
+            <x-primary-button type="submit" class="w-full">Reset Password</x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</x-app-layout>
