@@ -11,7 +11,7 @@
             <img src="{{ $cart->product->image}}" alt="{{ $cart->product->name }}" class="w-36 h-36 rounded-sm">
             <div class="flex items-center gap-4 justify-between w-full">
                 <div>
-                    <a href="{{ url('/products/' . $cart->product->id) }}">
+                    <a href="{{ url('/browse/' . $cart->product->id) }}">
                         <h3 class="text-3xl font-bold hover:underline">
                             {{ $cart->product->name }}
                         </h3>

@@ -5,7 +5,7 @@ $cart= $user ? $user -> carts : null;
 <nav class="fixed top-0 w-full bg-amber-50">
     <div class="container relative px-6 py-2 mx-auto md:flex md:justify-between md:items-center">
         <div class="flex items-center justify-between">
-            <a href="/products">
+            <a href="/">
                 <x-app-logo />
             </a>
 

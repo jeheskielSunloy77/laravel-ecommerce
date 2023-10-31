@@ -17,9 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'browserIndex'])->name('products.browser.index');
+Route::get('/browse/{product}', [ProductController::class, 'browserShow'])->name('products.browser.show');
 
 Route::resource('products', ProductController::class);
 Route::resource('carts', CartController::class)->middleware('auth');

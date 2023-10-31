@@ -21,6 +21,20 @@ class ProductController extends Controller
 
         return view('products.index', compact('products'));
     }
+    public function browserIndex(Request $request)
+    {
+        $products = null;
+
+        if ($request->query('search')) {
+            $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->get();
+        } elseif ($request->query('category')) {
+            $products = Product::where('category', $request->query('category'))->get();
+        } else {
+            $products = Product::all();
+        }
+
+        return view('products.browser.index', compact('products'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,6 +60,11 @@ class ProductController extends Controller
     {
         $product = Product::find($product->id);
         return view('products.show', compact('product'));
+    }
+    public function browserShow(Product $product)
+    {
+        $product = Product::find($product->id);
+        return view('products.browser.show', compact('product'));
     }
 
     /**

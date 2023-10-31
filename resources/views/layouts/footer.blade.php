@@ -1,6 +1,6 @@
 <footer>
     <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
-        <a href="/products">
+        <a href="/">
             <x-app-logo />
         </a>
 

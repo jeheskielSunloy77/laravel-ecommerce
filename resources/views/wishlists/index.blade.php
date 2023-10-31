@@ -5,7 +5,7 @@
             <img src="{{ $wishlist->product->image}}" alt="{{ $wishlist->product->name }}" class="w-36 h-36 rounded-sm" loading="lazy">
             <div class="flex items-center gap-4 justify-between w-full">
                 <div>
-                    <a href="{{ url('/products/' . $wishlist->product->id) }}">
+                    <a href="{{ url('/browse/' . $wishlist->product->id) }}">
                         <h3 class="text-3xl font-bold hover:underline">
                             {{ $wishlist->product->name }}
                         </h3>
