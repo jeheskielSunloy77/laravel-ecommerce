@@ -64,7 +64,12 @@ class ProductController extends Controller
     public function browserShow(Product $product)
     {
         $product = Product::find($product->id);
-        return view('products.browser.show', compact('product'));
+        $relatedProducts = Product::where('category', $product->category)->get();
+
+        return view('products.browser.show', compact(
+            'product',
+            'relatedProducts'
+        ));
     }
 
     /**
