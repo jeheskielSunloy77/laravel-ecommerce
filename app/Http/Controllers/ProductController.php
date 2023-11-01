@@ -25,15 +25,33 @@ class ProductController extends Controller
     {
         $products = null;
 
+        $page = $request->query('page') ? $request->query('page') : 1;
+        $pageSize = $request->query('pageSize') ? $request->query('pageSize') : 20;
+        $offset = ($page - 1) * $pageSize;
+        $total = Product::count();
+        $totalPages = ceil($total / $pageSize);
+        $nextPage = $page < $totalPages ? $page + 1 : null;
+        $prevPage = $page > 1 ? $page - 1 : null;
+
+        $pagination = [
+            'total' => $total,
+            'totalPages' => $totalPages,
+            'nextPage' => $nextPage,
+            'prevPage' => $prevPage,
+            'page' => $page,
+            'pageSize' => $pageSize,
+        ];
+
+
         if ($request->query('search')) {
-            $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->get();
+            $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->offset($offset)->limit($pageSize)->get();
         } elseif ($request->query('category')) {
-            $products = Product::where('category', $request->query('category'))->get();
+            $products = Product::where('category', $request->query('category'))->offset($offset)->limit($pageSize)->get();
         } else {
-            $products = Product::all();
+            $products = Product::offset($offset)->limit($pageSize)->get();
         }
 
-        return view('products.browser.index', compact('products'));
+        return view('products.browser.index', compact('products', 'pagination'));
     }
 
     /**
@@ -64,7 +82,7 @@ class ProductController extends Controller
     public function browserShow(Product $product)
     {
         $product = Product::find($product->id);
-        $relatedProducts = Product::where('category', $product->category)->get();
+        $relatedProducts = Product::where('category', $product->category)->limit(4)->get();
 
         return view('products.browser.show', compact(
             'product',

@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         Product::query()->delete();
         $productIds = [];
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $id = fake()->uuid();
             $productIds[] = $id;
 
