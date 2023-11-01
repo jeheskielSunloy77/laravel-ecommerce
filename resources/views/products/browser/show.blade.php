@@ -39,7 +39,14 @@ $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)
                     </div>
                 </div>
                 <div class="mt-12 flex flex-row justify-between">
-                    <button class="border font-mono p-2 w-1/3 bg-lime-300 border-black hover:shadow-[6px_6px_#000] transition-shadow shadow-[4px_4px_#000] lg:w-24">Buy Now</button>
+                    <form action="{{route('transactions.store', [
+                            'product_id' => $product->id,
+                            'quantity' => request('add_count') ? request('add_count') : 1
+                        ])
+                    }}" method="POST">
+                        @csrf
+                        <button type="submit" class="border font-mono p-2 w-1/3 bg-lime-300 border-black hover:shadow-[6px_6px_#000] transition-shadow shadow-[4px_4px_#000] lg:w-24">Buy Now</button>
+                    </form>
                     <div class="flex items-center gap-2">
                         @if($isCarted)
                         <div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::get('/browse/{product}', [ProductController::class, 'browserShow'])->name
 Route::resource('products', ProductController::class);
 Route::resource('carts', CartController::class)->middleware('auth');
 Route::resource('wishlists', WishlistController::class)->middleware('auth');
+Route::resource('transactions', TransactionController::class)->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

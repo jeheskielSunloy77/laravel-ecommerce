@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Database\Seeder;
@@ -78,6 +79,19 @@ class DatabaseSeeder extends Seeder
                 'id' => fake()->uuid(),
                 'user_id' => fake()->randomElement($userIds),
                 'product_id' => fake()->randomElement($productIds),
+                'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            ]);
+        }
+
+        Transaction::query()->delete();
+
+        for ($i = 1; $i <= 20; $i++) {
+            Transaction::create([
+                'id' => fake()->uuid(),
+                'user_id' => fake()->randomElement($userIds),
+                'product_id' => fake()->randomElement($productIds),
+                'quantity' => fake()->numberBetween(1, 10),
+                'rating' => fake()->boolean() ? fake()->numberBetween(1, 5) : null,
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }
