@@ -33,13 +33,18 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
             @endforeach
         </section>
         <section class="flex items-center w-fit mx-auto gap-2">
-            <!-- previous page -->
+            @if($pagination['prevPage'])
             <a href="{{url('/?page=' . $pagination['prevPage'] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
                 < </a>
+                    @endif
+
                     @for($i = 1; $i <= $pagination['totalPages']; $i++) <a href="{{url('/?page=' . $i ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4 {{ $pagination['page'] == $i ? 'bg-lime-300':'' }}">{{$i}}
             </a>@endfor
+            @if($pagination['nextPage'])
             <a href="{{url('/?page=' . $pagination['nextPage'] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
-                > </a>
+                >
+            </a>
+            @endif
         </section>
     </div>
 </x-app-layout>
