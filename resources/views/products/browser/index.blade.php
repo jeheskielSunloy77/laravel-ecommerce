@@ -19,6 +19,14 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
             </a>
             @endforeach
         </section>
+        @if($products->isEmpty())
+        <div class="border border-black w-full h-[80vh] flex items-center justify-center flex-col shadow-[8px_8px_black]">
+            <h3>Product Not Found</h3>
+            <p class="text-sm text-gray-700">
+                Sorry, we couldn't find any product matching your search.
+            </p>
+        </div>
+        @else
         <section class="grid 2xl:grid-cols-4 grid-cols-4 gap-4">
             @foreach($products as $product)
             <a href="{{ route('products.browser.show', ['product' => $product->id]) }}">
@@ -46,5 +54,7 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
             </a>
             @endif
         </section>
+        @endif
+
     </div>
 </x-app-layout>
