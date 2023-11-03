@@ -61,7 +61,7 @@ $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)
                         ])
                     }}" method="POST">
                         @csrf
-                        <button type="submit" class="border font-mono p-2 w-1/3 bg-lime-300 border-black hover:shadow-[6px_6px_#000] transition-shadow shadow-[4px_4px_#000] lg:w-24">Buy Now</button>
+                        <x-primary-button type="submit">Buy Now</x-primary-button>
                     </form>
                     <div class="flex items-center gap-2">
                         @if($isCarted)
