@@ -2,6 +2,9 @@
 
 @php
 $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewelery','electronics','kids','furniture','books','cosmetics','health','toys','grocery','stationary'];
+
+Log::info($products)
+
 @endphp
 
 <x-app-layout>
@@ -29,12 +32,30 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
         @else
         <section class="grid 2xl:grid-cols-4 grid-cols-4 gap-4">
             @foreach($products as $product)
+
+            @php
+            $rating = 0;
+            foreach ($product->transactions as $transaction) {
+            $rating += $transaction->rating;
+            }
+            $rating && $rating= round($rating / $product->transactions->count());
+
+            @endphp
+
             <a href="{{ route('products.browser.show', ['product' => $product->id]) }}">
                 <x-primary-card class="pb-4" hoverable>
                     <img class="object-cover w-full h-48" src="{{$product->image}}" alt="{{$product->name}}" loading="lazy">
                     <div class="mt-2 px-4">
                         <h3 class="text-lg text-gray-800 uppercase dark:text-white leading-4 line-clamp-1">{{$product->name}}</h3>
-                        <span class="text-lg font-bold">$ {{$product->price}}</span>
+                        <div class="flex items-center gap-4 text-lg">
+                            <span class="font-bold"> <span class="text-red-700">$</span> {{$product->price}}</span>
+                            <span class="flex items-center text-red-700">
+                                @for($i=0; $i<5;$i++) <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="{{ $rating <= $i ? 'm8.85 17.825l3.15-1.9l3.15 1.925l-.825-3.6l2.775-2.4l-3.65-.325l-1.45-3.4l-1.45 3.375l-3.65.325l2.775 2.425l-.825 3.575ZM5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22ZM12 13.25Z' : 'm5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22Z' }}" />
+                                    </svg>
+                                    @endfor
+                            </span>
+                        </div>
                     </div>
                 </x-primary-card>
             </a>

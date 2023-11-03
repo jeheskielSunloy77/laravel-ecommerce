@@ -10,7 +10,7 @@
                             {{ $wishlist->product->name }}
                         </h3>
                     </a>
-                    <span class="text-lg text-red-500">$</span> {{ $wishlist->product->price }}
+                    <span class="text-lg text-red-700">$</span> {{ $wishlist->product->price }}
                 </div>
                 <div class="flex items-center gap-1 flex-col">
                     <form action="{{ url('/wishlists/' . $wishlist->id ) }}" method="post">

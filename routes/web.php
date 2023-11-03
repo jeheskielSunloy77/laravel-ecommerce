@@ -22,18 +22,28 @@ Route::get('/', [ProductController::class, 'browserIndex'])->name('products.brow
 Route::get('/browse/{product}', [ProductController::class, 'browserShow'])->name('products.browser.show');
 
 Route::resource('products', ProductController::class);
-Route::resource('carts', CartController::class)->middleware('auth');
-Route::resource('wishlists', WishlistController::class)->middleware('auth');
-Route::resource('transactions', TransactionController::class)->middleware('auth');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::resource('carts', CartController::class)->middleware('auth');
+    Route::resource('wishlists', WishlistController::class)->middleware('auth');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+});
+
+Route::middleware(['auth', 'verified', 'password.confirm'])->group(function () {
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 });
 
 require __DIR__ . '/auth.php';

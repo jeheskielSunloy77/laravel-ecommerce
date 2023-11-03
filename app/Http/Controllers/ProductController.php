@@ -33,15 +33,15 @@ class ProductController extends Controller
         if ($request->query('search')) {
             $query = Product::where('name', 'like', '%' . $request->query('search') . '%');
 
-            $products = $query->offset($offset)->limit($pageSize)->get();
+            $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
             $total = $query->count();
         } elseif ($request->query('category')) {
             $query = Product::where('category', $request->query('category'));
 
-            $products = $query->offset($offset)->limit($pageSize)->get();
+            $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
             $total = $query->count();
         } else {
-            $products = Product::offset($offset)->limit($pageSize)->get();
+            $products = Product::offset($offset)->limit($pageSize)->with('transactions')->get();
             $total = Product::count();
         }
 
@@ -89,11 +89,20 @@ class ProductController extends Controller
     public function browserShow(Product $product)
     {
         $product = Product::find($product->id);
-        $relatedProducts = Product::where('category', $product->category)->limit(4)->get();
+        $relatedProducts = Product::where('category', $product->category)->limit(4)->with('transactions')->get();
+        $rating = 0;
+        $transactionsCount = $product->transactions->count();
+
+        foreach ($product->transactions as $transaction) {
+            $rating += $transaction->rating;
+        }
+        $rating && $rating = round($rating / $transactionsCount);
 
         return view('products.browser.show', compact(
             'product',
-            'relatedProducts'
+            'relatedProducts',
+            'rating',
+            'transactionsCount'
         ));
     }
 

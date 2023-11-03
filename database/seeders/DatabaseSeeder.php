@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
 
         Transaction::query()->delete();
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 400; $i++) {
             Transaction::create([
                 'id' => fake()->uuid(),
                 'user_id' => fake()->randomElement($userIds),

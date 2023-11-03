@@ -10,9 +10,25 @@ $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)
 <x-app-layout>
     <div class="space-y-4">
         <section class="md:flex md:items-center">
-            <div class="w-full h-64 md:w-1/2 lg:h-96 "><img class="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="{{$product->image}}" alt="{{$product->name}}" loading="lazy"></div>
+            <div class="w-full h-64 md:w-1/2 lg:h-96 "><img class="h-full w-full rounded-sm object-cover max-w-lg mx-auto" src="{{$product->image}}" alt="{{$product->name}}" loading="lazy"></div>
             <div class="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2 lg:py-12">
-                <h3 class="text-3xl leading-7 mb-2 font-bold uppercase lg:text-5xl">{{$product->name}}</h3><span class="text-2xl leading-7 font-bold mt-3">${{$product->price}}</span>
+                <h3 class="text-3xl leading-7 mb-2 font-bold uppercase lg:text-5xl">{{$product->name}}</h3>
+                <div class="flex items-center gap-4 text-lg">
+                    <span class="font-bold text-2xl leading-7"> <span class="text-red-700">$</span> {{$product->price}}</span>
+                    <span class="flex items-center gap-1 font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-700" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7 22q-.825 0-1.413-.588T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.588 1.413T7 22Zm10 0q-.825 0-1.413-.588T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.588 1.413T17 22ZM6.15 6l2.4 5h7l2.75-5H6.15ZM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.738.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.988t-.05-1.962L6.6 11.6L3 4H1V2h3.25l.95 2Zm3.35 7h7h-7Z" />
+                        </svg>
+                        {{$transactionsCount}} Transactions
+                    </span>
+                    <span class="flex items-center text-red-700">
+                        @for($i=0; $i<5;$i++) <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="{{ $rating <= $i ? 'm8.85 17.825l3.15-1.9l3.15 1.925l-.825-3.6l2.775-2.4l-3.65-.325l-1.45-3.4l-1.45 3.375l-3.65.325l2.775 2.425l-.825 3.575ZM5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22ZM12 13.25Z' : 'm5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22Z' }}" />
+                            </svg>
+                            @endfor
+                    </span>
+
+                </div>
                 <div class="mt-8"><label class="text-1xl" for="count">Count:</label>
                     <div class="flex items-center mt-4">
                         <a href="{{ route('products.browser.show', ['product' => $product->id, 'add_count' => request('add_count') ? request('add_count') + 1 : 2]) }}">
@@ -94,12 +110,30 @@ $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)
             <h3 class="text-2xl font-medium">Related Products</h3>
             <div class="grid grid-cols-4 gap-4">
                 @foreach($relatedProducts as $relatedProduct)
+
+                @php
+                $rating = 0;
+                foreach ($relatedProduct->transactions as $transaction) {
+                $rating += $transaction->rating;
+                }
+                $rating && $rating= round($rating / $relatedProduct->transactions->count());
+
+                @endphp
+
                 <a href="{{ route('products.browser.show', ['product' => $relatedProduct->id]) }}">
                     <x-primary-card class="pb-4" hoverable>
                         <img class="object-cover w-full h-48" src="{{$relatedProduct->image}}" alt="{{$relatedProduct->name}}" loading="lazy">
                         <div class="mt-2 px-4">
                             <h3 class="text-lg text-gray-800 uppercase dark:text-white leading-4 line-clamp-1">{{$relatedProduct->name}}</h3>
-                            <span class="text-lg font-bold">$ {{$relatedProduct->price}}</span>
+                            <div class="flex items-center gap-4 text-lg">
+                                <span class="font-bold"> <span class="text-red-700">$</span> {{$relatedProduct->price}}</span>
+                                <span class="flex items-center text-red-700">
+                                    @for($i=0; $i<5;$i++) <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="{{ $rating <= $i ? 'm8.85 17.825l3.15-1.9l3.15 1.925l-.825-3.6l2.775-2.4l-3.65-.325l-1.45-3.4l-1.45 3.375l-3.65.325l2.775 2.425l-.825 3.575ZM5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22ZM12 13.25Z' : 'm5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275L5.825 22Z' }}" />
+                                        </svg>
+                                        @endfor
+                                </span>
+                            </div>
                         </div>
                     </x-primary-card>
                 </a>
