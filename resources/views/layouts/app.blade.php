@@ -20,11 +20,11 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen">
+    <div>
         @if(!$isGuest)
         @include('layouts.navigation')
         @endif
-        <main class="container mx-auto py-8 mt-20">
+        <main class="container mx-auto py-8 mt-20 min-h-[80vh]">
             {{ $slot }}
         </main>
         @if(!$isGuest)
