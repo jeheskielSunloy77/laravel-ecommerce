@@ -16,7 +16,7 @@
                             {{ $cart->product->name }}
                         </h3>
                     </a>
-                    <div class="flex items-center gap-4 text-lg">
+                    <div class="flex items-center gap-4 text-lg mb-2">
                         <span> <span class="text-red-700 font-bold">$</span> {{$cart->product->price}}</span>
                         <div class="flex items-center gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-700" viewBox="0 0 24 24">
@@ -34,6 +34,15 @@
                             @endif
                         </div>
                     </div>
+                    <form action="{{route('transactions.store', [
+                            'product_id' => $cart->product->id,
+                            'quantity' => request('add_count') ? request('add_count') : 1,
+                            'cart_id' => $cart->id
+                        ])
+                    }}" method="POST">
+                        @csrf
+                        <x-primary-button type="submit">Buy Now</x-primary-button>
+                    </form>
                 </div>
                 <div class="flex items-center gap-1 flex-col">
                     <form action="{{ url('/carts/' . $cart->id ) }}" method="post">

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -39,12 +42,17 @@ class TransactionController extends Controller
         ]);
 
         $transaction = Transaction::create([
+            'id' => Str::uuid(),
             'user_id' => auth()->user()->id,
             'product_id' => $request->product_id,
             'quantity' => $request->quantity
         ]);
-        Auth::logoutOtherDevices($request->password);
 
+        $cartId = $request->query('cart_id');
+
+        if ($cartId) {
+            Cart::find($cartId)->delete();
+        }
 
         return redirect()->route('transactions.show', $transaction->id);
     }
