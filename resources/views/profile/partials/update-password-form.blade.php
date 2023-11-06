@@ -13,9 +13,9 @@
         @csrf
         @method('put')
 
-        <x-text-field label="Current Password" id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" placeholder="Current Password" />
-        <x-text-field label="New Password" id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" placeholder="New Password" />
-        <x-text-field label="Password Confirmation" id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" placeholder="Password Confirmation" />
+        <x-text-field label="Current Password" id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" placeholder="Current Password" :errors="$errors->get('current_password')" />
+        <x-text-field label="New Password" id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" placeholder="New Password" :errors="$errors->get('password')" />
+        <x-text-field label="Password Confirmation" id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" placeholder="Password Confirmation" :errors="$errors->get('password_confirmation')" />
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
