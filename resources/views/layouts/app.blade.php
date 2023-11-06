@@ -16,8 +16,52 @@
 
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
+<style>
+    .swal-modal {
+        border: 1px solid black;
+        border-radius: 0;
+        box-shadow: 4px 4px black;
+    }
+
+    .swal-title {
+        color: black;
+    }
+
+    .swal-button {
+        border: 1px solid black;
+        border-radius: 0;
+        box-shadow: 4px 4px black;
+        transition: box-shadow 0.15s ease-in-out;
+    }
+
+    .swal-button:hover {
+        box-shadow: 6px 6px black;
+    }
+
+    .swal-button:focus {
+        box-shadow: 6px 6px black !important;
+    }
+
+    .swal-button--cancel {
+        background-color: transparent;
+    }
+
+    .swal-button--cancel:hover {
+        background-color: transparent !important;
+    }
+
+    .swal-button--confirm {
+        background-color: #bef264;
+    }
+
+    .swal-button--confirm:hover {
+        background-color: #bef264 !important;
+    }
+</style>
 
 <body class="font-sans antialiased">
     <div>
