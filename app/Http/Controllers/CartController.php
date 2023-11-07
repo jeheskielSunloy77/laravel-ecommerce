@@ -37,6 +37,7 @@ class CartController extends Controller
             'product_id' => $request->query('product_id'),
             'quantity' => $request->query('quantity') ?? 1,
         ]);
+        session()->flash('status', 'added to cart');
         return back();
     }
 
@@ -75,6 +76,7 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         $cart->delete();
+        session()->flash('status', 'removed from cart');
         return back();
     }
 }

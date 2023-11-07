@@ -5,6 +5,8 @@
 $isAuthed = auth()->check();
 $isWishlisted = $isAuthed ? auth()->user()->wishlists->where('product_id', $product->id)->first() : null;
 $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)->first() : null;
+
+$sessionStatus = session('status');
 @endphp
 
 <x-app-layout>
@@ -143,3 +145,32 @@ $isCarted = $isAuthed ? auth()->user()->carts->where('product_id', $product->id)
     </div>
 
 </x-app-layout>
+
+@if ($sessionStatus)
+@if ($sessionStatus === 'added to cart')
+<script>
+    swal({
+            title: "Added to Cart",
+            text: "Product added to cart successfully",
+            icon: "success",
+            buttons: {
+                cancel: {
+                    value: null,
+                    text: 'Ok',
+                    visible: true,
+                },
+                confirm: {
+                    value: true,
+                    text: 'Go to Cart',
+                }
+
+            }
+        })
+        .then((value) => value && (window.location.href = "{{ route('carts.index') }}"));
+</script>
+@elseif ($sessionStatus === 'removed from cart')
+<script>
+    swal("Removed from Cart", "Product removed from cart successfully", "success");
+</script>
+@endif
+@endif
