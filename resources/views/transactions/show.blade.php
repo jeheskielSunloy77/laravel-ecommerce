@@ -156,7 +156,24 @@ $sessionStatus = session('status');
 @if ($sessionStatus)
 @if ($sessionStatus === 'transaction created')
 <script>
-    swal('Transaction Success', 'Your transaction has been successfully created, You can check the transaction details here. Thank you for shopping with us.', 'success')
+    swal({
+            title: "Transaction Success",
+            text: "Your transaction has been successfully created, You can check the transaction details here. Thank you for shopping with us.",
+            icon: "success",
+            buttons: {
+                cancel: {
+                    value: null,
+                    text: 'Ok',
+                    visible: true,
+                },
+                confirm: {
+                    value: true,
+                    text: 'Give Review',
+                }
+
+            }
+        })
+        .then((value) => value && (window.location.href = "{{ route('transactions.show',['transaction'=>$transaction->id,'review'=>'true']) }}"));
 </script>
 @elseif ($sessionStatus === 'review submitted')
 <script>
