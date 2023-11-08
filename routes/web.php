@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+    Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 });
 
 Route::middleware(['auth', 'verified', 'password.confirm'])->group(function () {

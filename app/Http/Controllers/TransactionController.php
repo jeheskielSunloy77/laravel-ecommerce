@@ -6,7 +6,6 @@ use App\Models\Cart;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class TransactionController extends Controller
@@ -64,6 +63,21 @@ class TransactionController extends Controller
     {
         $transaction->load('product');
         return view('transactions.show', compact('transaction'));
+    }
+
+    public function update(Request $request, Transaction $transaction)
+    {
+        $request->validate([
+            'rating' => 'required|numeric|min:1|max:5',
+            'review' => 'required|string|min:10'
+        ]);
+        $transaction->update([
+            'rating' => $request->rating
+        ]);
+
+        session()->flash('status', 'review submitted');
+
+        return redirect()->route('transactions.show', $transaction->id);
     }
 
     /**
