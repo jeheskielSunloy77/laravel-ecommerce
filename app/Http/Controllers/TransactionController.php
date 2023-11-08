@@ -53,7 +53,7 @@ class TransactionController extends Controller
         if ($cartId) {
             Cart::find($cartId)->delete();
         }
-
+        session()->flash('status', 'transaction created');
         return redirect()->route('transactions.show', $transaction->id);
     }
 
