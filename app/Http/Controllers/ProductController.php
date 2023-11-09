@@ -5,60 +5,56 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+function baseIndex(Request $request, String $view)
+{
+    $products = null;
+    $total = null;
+
+    $page = $request->query('page') ? $request->query('page') : 1;
+    $pageSize = $request->query('pageSize') ? $request->query('pageSize') : 20;
+    $offset = ($page - 1) * $pageSize;
+
+    if ($request->query('search')) {
+        $query = Product::where('name', 'like', '%' . $request->query('search') . '%');
+
+        $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
+        $total = $query->count();
+    } elseif ($request->query('category')) {
+        $query = Product::where('category', $request->query('category'));
+
+        $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
+        $total = $query->count();
+    } else {
+        $products = Product::offset($offset)->limit($pageSize)->with('transactions')->get();
+        $total = Product::count();
+    }
+
+    $totalPages = ceil($total / $pageSize);
+    $nextPage = $page < $totalPages ? $page + 1 : null;
+    $prevPage = $page > 1 ? $page - 1 : null;
+
+    $pagination = [
+        'total' => $total,
+        'totalPages' => $totalPages,
+        'nextPage' => $nextPage,
+        'prevPage' => $prevPage,
+        'page' => $page,
+        'pageSize' => $pageSize,
+    ];
+
+    return view($view, compact('products', 'pagination'));
+}
+
+
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = null;
-
-        if ($request->query('search')) {
-            $products = Product::where('name', 'like', '%' . $request->query('search') . '%')->get();
-        } elseif ($request->query('category')) {
-            $products = Product::where('category', $request->query('category'))->get();
-        } else {
-            $products = Product::all();
-        }
-
-        return view('products.index', compact('products'));
+        return  baseIndex($request, 'products.index');
     }
     public function browserIndex(Request $request)
     {
-        $products = null;
-        $total = null;
-
-        $page = $request->query('page') ? $request->query('page') : 1;
-        $pageSize = $request->query('pageSize') ? $request->query('pageSize') : 20;
-        $offset = ($page - 1) * $pageSize;
-
-        if ($request->query('search')) {
-            $query = Product::where('name', 'like', '%' . $request->query('search') . '%');
-
-            $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
-            $total = $query->count();
-        } elseif ($request->query('category')) {
-            $query = Product::where('category', $request->query('category'));
-
-            $products = $query->offset($offset)->limit($pageSize)->with('transactions')->get();
-            $total = $query->count();
-        } else {
-            $products = Product::offset($offset)->limit($pageSize)->with('transactions')->get();
-            $total = Product::count();
-        }
-
-        $totalPages = ceil($total / $pageSize);
-        $nextPage = $page < $totalPages ? $page + 1 : null;
-        $prevPage = $page > 1 ? $page - 1 : null;
-
-        $pagination = [
-            'total' => $total,
-            'totalPages' => $totalPages,
-            'nextPage' => $nextPage,
-            'prevPage' => $prevPage,
-            'page' => $page,
-            'pageSize' => $pageSize,
-        ];
-
-        return view('products.browser.index', compact('products', 'pagination'));
+        return baseIndex($request, 'products.browser.index');
     }
 
     /**
@@ -78,14 +74,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        $product = Product::find($product->id);
-        return view('products.show', compact('product'));
-    }
     public function browserShow(Product $product)
     {
         $product = Product::find($product->id);
