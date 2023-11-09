@@ -111,7 +111,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $product = Product::find($product->id);
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -119,7 +120,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|max:100',
+            'category' => 'required|string|in:clothes,shoes,sports wear,bags,hats,watches,jewelery,electronics,kids,furniture,books,cosmetics,health,toys,grocery,stationary',
+            'description' => 'required|min:20',
+        ]);
+
+        $product->update([
+            'name' => $request->name,
+            'category' => $request->category,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back()->with('status', 'product updated');
     }
 
     /**
@@ -129,6 +142,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        return redirect()->back()->with('status', 'product deleted');
     }
 }
