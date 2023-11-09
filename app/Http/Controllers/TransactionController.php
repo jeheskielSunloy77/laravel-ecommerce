@@ -10,9 +10,6 @@ use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
 
@@ -30,9 +27,6 @@ class TransactionController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -52,13 +46,9 @@ class TransactionController extends Controller
         if ($cartId) {
             Cart::find($cartId)->delete();
         }
-        session()->flash('status', 'transaction created');
-        return redirect()->route('transactions.show', $transaction->id);
+        return redirect()->route('transactions.show', $transaction->id)->with('status', 'transaction created');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Transaction $transaction)
     {
         $transaction->load('product');
@@ -75,19 +65,13 @@ class TransactionController extends Controller
             'rating' => $request->rating
         ]);
 
-        session()->flash('status', 'review submitted');
-
-        return redirect()->route('transactions.show', $transaction->id);
+        return redirect()->route('transactions.show', $transaction->id)->with('status', 'review submitted');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-        Auth::logoutOtherDevices(auth()->user()->password);
 
-        return back();
+        return back()->with('status', 'transaction deleted');
     }
 }

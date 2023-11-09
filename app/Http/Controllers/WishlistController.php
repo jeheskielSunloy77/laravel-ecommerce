@@ -30,9 +30,12 @@ class WishlistController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'product_id' => 'required',
+        ]);
         Wishlist::create([
             'user_id' => auth()->id(),
-            'product_id' => $request->query('product_id'),
+            'product_id' => $request->product_id,
         ]);
         return back();
     }
