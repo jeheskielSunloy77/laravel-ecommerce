@@ -95,7 +95,7 @@ $sessionStatus = session('status');
             </a>
             @if(request('review')==='true')
             <x-modal name="product-review" :show="true" focusable>
-                <form method="post" action="{{route('transactions.update',$transaction->id) }}" class="p-6 space-y-4">
+                <form method="POST" action="{{route('transactions.update',$transaction->id) }}" class="p-6 space-y-4">
                     @csrf
                     @method('PUT')
                     <div class="space-y-1">

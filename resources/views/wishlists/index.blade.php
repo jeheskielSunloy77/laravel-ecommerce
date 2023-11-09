@@ -5,7 +5,7 @@
             <img src="{{ $wishlist->product->image}}" alt="{{ $wishlist->product->name }}" class="w-36 h-36 rounded-sm" loading="lazy">
             <div class="flex items-center gap-4 justify-between w-full">
                 <div>
-                    <a href="{{ url('/browse/' . $wishlist->product->id) }}">
+                    <a href="{{ route('products.browser.show', $wishlist->product->id) }}">
                         <h3 class="text-3xl font-bold hover:underline">
                             {{ $wishlist->product->name }}
                         </h3>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-1 flex-col">
-                    <form action="{{ url('/wishlists/' . $wishlist->id ) }}" method="post">
+                    <form action="{{ route('wishlists.destroy', $wishlist->id ) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="inline-flex items-center text-sm hover:shadow-[4px_4px_black] hover:bg-red-400 text-black p-1.5 border border-black transition-all">

@@ -9,9 +9,9 @@
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="POST" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
-        @method('put')
+        @method('PUT')
 
         <x-text-field label="Current Password" id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" placeholder="Current Password" :errors="$errors->get('current_password')" />
         <x-text-field label="New Password" id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" placeholder="New Password" :errors="$errors->get('password')" />

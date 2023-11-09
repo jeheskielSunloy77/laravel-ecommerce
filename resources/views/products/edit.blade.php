@@ -4,7 +4,7 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
 @endphp
 
 <x-app-layout>
-    <form method="post" action="{{route('products.update', $product->id)}}" class="p-6 space-y-4">
+    <form method="POST" action="{{route('products.update', $product->id)}}" class="p-6 space-y-4">
         @csrf
         @method('PUT')
         <div class="space-y-1">

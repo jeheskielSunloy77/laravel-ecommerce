@@ -12,7 +12,7 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
             @php
             $isActive = request('category') === $category;
             @endphp
-            <a href="{{$isActive ?  route('products.index') : url('/products?category=' . $category)}}">
+            <a href="{{$isActive ?  route('products.index') : route('products.index', ['category' => $category ]) }}">
                 <div class="border border-black px-4 py-2 transition-all {{$isActive ? 'bg-lime-300 shadow-[4px_4px_black]' : 'hover:shadow-[4px_4px_black]'}}">
                     {{ $category }}
                 </div>

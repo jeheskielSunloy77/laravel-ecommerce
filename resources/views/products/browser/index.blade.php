@@ -12,7 +12,7 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
             @php
             $isActive = request('category') === $category;
             @endphp
-            <a href="{{$isActive ?  route('products.browser.index') : url('/?category=' . $category)}}">
+            <a href="{{$isActive ?  route('products.browser.index') : route('products.browser.index', ['category' => $category]) }}">
                 <div class="border border-black px-4 py-2 transition-all {{$isActive ? 'bg-lime-300 shadow-[4px_4px_black]' : 'hover:shadow-[4px_4px_black]'}}">
                     {{ $category }}
                 </div>
@@ -60,14 +60,14 @@ $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewe
         </section>
         <section class="flex items-center w-fit mx-auto gap-2">
             @if($pagination['prevPage'])
-            <a href="{{url('/?page=' . $pagination['prevPage'] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
+            <a href="{{route('products.browser.index',['page'=> $pagination['prevPage']] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
                 < </a>
                     @endif
 
-                    @for($i = 1; $i <= $pagination['totalPages']; $i++) <a href="{{url('/?page=' . $i ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4 {{ $pagination['page'] == $i ? 'bg-lime-300':'' }}">{{$i}}
+                    @for($i = 1; $i <= $pagination['totalPages']; $i++) <a href="{{route('products.browser.index',['page'=> $i] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4 {{ $pagination['page'] == $i ? 'bg-lime-300':'' }}">{{$i}}
             </a>@endfor
             @if($pagination['nextPage'])
-            <a href="{{url('/?page=' . $pagination['nextPage'] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
+            <a href="{{route('products.browser.index',['page'=> $pagination['nextPage']] ) }}" class="border border-black shadow-[4px_4px_black] hover:shadow-[5px_5px_black] transition-shadow py-2 px-4">
                 >
             </a>
             @endif

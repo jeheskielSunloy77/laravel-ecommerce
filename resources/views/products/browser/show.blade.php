@@ -68,7 +68,7 @@ $sessionStatus = session('status');
                     <div class="flex items-center gap-2">
                         @if($isCarted)
                         <div>
-                            <form action="{{ url('/carts/' . $isCarted->id ) }}" method="post">
+                            <form action="{{ route('carts.destroy', $isCarted->id ) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button title="remove from cart" type="submit" class="p-1.5 border border-black transition-all hover:shadow-[5px_5px_black] shadow-[4px_4px_black] bg-lime-300">
@@ -79,7 +79,7 @@ $sessionStatus = session('status');
                             </form>
                         </div>
                         @else
-                        <form action="{{ url('/carts?product_id=' . $product->id . '&quantity=' . request('add_count') ) }}" method="post">
+                        <form action="{{ route('carts.store', ['product_id' => $product->id, 'quantity' => request('add_count') ]) }}" method="POST">
                             @csrf
                             <button title="add to cart" type="submit" class="p-1.5 border border-black transition-all shadow-[4px_4px_black] hover:bg-lime-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@ $sessionStatus = session('status');
 
                         </form>
                         @endif
-                        <form action="{{ $isWishlisted ? url('/wishlists/' . $isWishlisted->id) : url('/wishlists?product_id=' . $product->id) }}" method="post">
+                        <form action="{{ $isWishlisted ? route('wishlists.destroy', $isWishlisted->id) : route('wishlists.store', ['product_id' => $product->id ]) }}" method="POST">
                             @csrf
                             @if($isWishlisted)
                             @method('DELETE')

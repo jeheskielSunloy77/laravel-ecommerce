@@ -26,7 +26,7 @@
                             </svg>
                             {{ $transaction->created_at->diffForHumans() }}
                         </span>
-                        <a href="{{ url('/browse/' . $transaction->product->id) }}">
+                        <a href="{{ route('products.browser.show', $transaction->product->id) }}">
                             <h3 class="text-3xl font-bold hover:underline">
                                 {{ $transaction->product->name }}
                             </h3>
