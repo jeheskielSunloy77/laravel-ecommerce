@@ -1,4 +1,4 @@
-@section('title', 'Transaction Detail')
+@section('title', 'Transaction Detail | Tokolaravel')
 @props(['product'])
 
 @php

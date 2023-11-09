@@ -1,8 +1,11 @@
-@section('title', 'Transaction History')
+@section('title', 'Transaction History | Tokolaravel')
 
 <x-app-layout>
     <div class="gap-4 grid grid-cols-[0.5fr,1fr]">
-        <x-primary-card class="h-fit p-4 sticky top-16">
+        <x-primary-card class="h-[60vh] p-4 sticky top-16 space-y-2">
+            <span class="text-sm font-bold">
+                Search
+            </span>
             <div class="relative flex items-center">
                 <span class="absolute">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-3" viewBox="0 0 24 24">
@@ -13,6 +16,9 @@
                     <input name="search" type="text" placeholder="Search for transactions" class="w-full focus:shadow-[4px_4px_black] focus:outline-none transition-shadow block py-2.5 text-gray-700 placeholder-gray-400/70 bg-amber-50 border border-black pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-amber-50 dark:text-gray-300 dark:border-gray-600" value="{{request('search')}}">
                 </form>
             </div>
+            <span class="text-sm font-bold">
+                Filters
+            </span>
         </x-primary-card>
         <section class="space-y-4">
             @foreach ($transactions as $transaction)

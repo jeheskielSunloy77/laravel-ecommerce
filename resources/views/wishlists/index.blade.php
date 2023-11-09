@@ -1,3 +1,5 @@
+@section('title', 'User Wishlist | Tokolaravel')
+
 <x-app-layout>
     <div class="gap-4 grid grid-cols-2">
         @foreach ($wishlists as $wishlist)

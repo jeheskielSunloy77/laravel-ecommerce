@@ -1,4 +1,4 @@
-@section('title', 'Cart')
+@section('title', 'User Cart | Tokolaravel')
 
 <x-app-layout>
     <div class="gap-4 grid grid-cols-2">
