@@ -11,7 +11,8 @@ class Transaction extends Model
         'user_id',
         'product_id',
         'quantity',
-        'rating'
+        'rating',
+        'review'
     ];
     protected $primaryKey = 'id';
     protected $keyType = 'string';

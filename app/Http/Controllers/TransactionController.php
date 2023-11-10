@@ -61,7 +61,8 @@ class TransactionController extends Controller
             'review' => 'required|string|min:10'
         ]);
         $transaction->update([
-            'rating' => $request->rating
+            'rating' => $request->rating,
+            'review' => $request->review
         ]);
 
         return redirect()->route('transactions.show', $transaction->id)->with('status', 'review submitted');

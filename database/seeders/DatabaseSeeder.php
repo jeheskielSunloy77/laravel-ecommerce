@@ -86,12 +86,14 @@ class DatabaseSeeder extends Seeder
         Transaction::query()->delete();
 
         for ($i = 1; $i <= 400; $i++) {
+            $isRated = fake()->boolean();
             Transaction::create([
                 'id' => fake()->uuid(),
                 'user_id' => fake()->randomElement($userIds),
                 'product_id' => fake()->randomElement($productIds),
                 'quantity' => fake()->numberBetween(1, 10),
-                'rating' => fake()->boolean() ? fake()->numberBetween(1, 5) : null,
+                'rating' => $isRated ? fake()->numberBetween(1, 5) : null,
+                'review' => $isRated && fake()->boolean() ? fake()->paragraph(3) : null,
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }
