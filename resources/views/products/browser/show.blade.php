@@ -32,37 +32,28 @@ $sessionStatus = session('status');
 
                 </div>
                 <div class="mt-8"><label class="text-1xl" for="count">Count:</label>
-                    <div class="flex items-center mt-4">
-                        <a href="{{ route('products.browser.show', ['product' => $product->id, 'add_count' => request('add_count') ? request('add_count') + 1 : 2]) }}">
-                            <button class="border border-black w-36 h-12 text-black transition-shadow hover:shadow-[4px_4px_black]">
-                                <div class="flex justify-center">
-                                    <div><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                        </svg></div>
-                                </div>
-                            </button>
-                        </a>
-                        <span class="text-2xl mx-2">
-                            {{ request('add_count') ? request('add_count') :'1' }}
+                    <div class="flex items-center mt-4 gap-4">
+                        <button onclick="changeQuantity('add')" class="flex items-center justify-center border border-black w-36 h-12 text-black transition-shadow hover:shadow-[4px_4px_black]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </button>
+                        <span id="display-quantity" class="font-bold">1</span>
                         </span>
-                        <a href="{{route('products.browser.show', ['product' => $product->id, 'add_count' => request('add_count') ? request('add_count') - 1 : 0])}}">
-                            <button class="border border-black w-36 h-12 text-black transition-shadow hover:shadow-[4px_4px_black]">
-                                <div class="flex justify-center">
-                                    <div><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
-                                        </svg></div>
-                                </div>
-                            </button>
-                        </a>
+                        <button onclick="changeQuantity('remove')" class="flex items-center justify-center border border-black w-36 h-12 text-black transition-shadow hover:shadow-[4px_4px_black]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <div class="mt-12 flex flex-row justify-between">
                     <form action="{{route('transactions.store', [
                             'product_id' => $product->id,
-                            'quantity' => request('add_count') ? request('add_count') : 1
                         ])
                     }}" method="POST">
                         @csrf
+                        <input type="hidden" name="quantity" id="quantity" value="1">
                         <x-primary-button type="submit">Buy Now</x-primary-button>
                     </form>
                     <div class="flex items-center gap-2">
@@ -79,8 +70,9 @@ $sessionStatus = session('status');
                             </form>
                         </div>
                         @else
-                        <form action="{{ route('carts.store', ['product_id' => $product->id, 'quantity' => request('add_count') ]) }}" method="POST">
+                        <form action="{{ route('carts.store', ['product_id' => $product->id ]) }}" method="POST">
                             @csrf
+                            <input type="hidden" name="quantity" id="quantity" value="1">
                             <button title="add to cart" type="submit" class="p-1.5 border border-black transition-all shadow-[4px_4px_black] hover:bg-lime-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
                                     <path fill="currentColor" d="M11 9V6H8V4h3V1h2v3h3v2h-3v3h-2ZM7 22q-.825 0-1.413-.588T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.588 1.413T7 22Zm10 0q-.825 0-1.413-.588T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.588 1.413T17 22ZM1 4V2h3.275l4.25 9h7l3.9-7H21.7l-4.4 7.95q-.275.5-.738.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.713-.975T5.25 14.05L6.6 11.6L3 4H1Z" />
@@ -145,6 +137,19 @@ $sessionStatus = session('status');
     </div>
 
 </x-app-layout>
+
+<script>
+    const quantity = document.querySelectorAll('#quantity');
+    const displayQuantity = document.getElementById('display-quantity');
+
+    function changeQuantity(direction) {
+        const isAdd = direction === 'add';
+        if (!isAdd && +quantity[0].value === 1) return;
+
+        quantity.forEach(q => q.value = isAdd ? +q.value + 1 : +q.value - 1);
+        displayQuantity.innerHTML = quantity[0].value;
+    }
+</script>
 
 @if ($sessionStatus)
 @if ($sessionStatus === 'added to cart')
