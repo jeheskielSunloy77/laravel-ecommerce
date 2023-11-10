@@ -59,7 +59,6 @@ class ProductController extends Controller
 
     public function browserShow(Product $product)
     {
-        $product = Product::find($product->id);
         $relatedProducts = Product::where('category', $product->category)->limit(4)->with('transactions')->get();
         $rating = 0;
         $transactionsCount = $product->transactions->count();
@@ -79,7 +78,6 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $product = Product::find($product->id);
         return view('products.edit', compact('product'));
     }
 

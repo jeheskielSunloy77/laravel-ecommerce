@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'browserIndex'])->name('products.browser.index');
 Route::get('/browse/{product}', [ProductController::class, 'browserShow'])->name('products.browser.show');
-
 Route::resource('products', ProductController::class);
 
 Route::middleware('auth')->group(function () {
@@ -30,10 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
     Route::resource('carts', CartController::class)->middleware('auth');
     Route::resource('wishlists', WishlistController::class)->middleware('auth');
 
