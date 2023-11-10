@@ -27,9 +27,7 @@
                     <div class="flex items-center gap-4 text-lg mb-2">
                         <span> <span class="text-red-700 font-bold">$</span> {{$cart->product->price}}</span>
                         <div class="flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-700" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M7 22q-.825 0-1.413-.588T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.588 1.413T7 22Zm10 0q-.825 0-1.413-.588T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.588 1.413T17 22ZM6.15 6l2.4 5h7l2.75-5H6.15ZM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.738.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.988t-.05-1.962L6.6 11.6L3 4H1V2h3.25l.95 2Zm3.35 7h7h-7Z" />
-                            </svg>
+                            <x-icon-cart class="text-red-700" size="w-5 h-5" />
                             @if($isEditing)
                             <form action="{{ route('carts.update', $cart->id ) }}" method="POST">
                                 @csrf
@@ -57,9 +55,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="inline-flex items-center text-sm hover:shadow-[4px_4px_black] hover:bg-red-400 text-black p-1.5 border border-black transition-all">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z" />
-                            </svg>
+                            <x-icon-trash />
                         </button>
                     </form>
                     <a class="{{ ($isEditing ? 'shadow-[4px_4px_black] bg-lime-300' : 'hover:shadow-[4px_4px_black] hover:bg-lime-300 transition-all') .  ' inline-flex items-center text-sm text-black p-1.5 border border-black'}}" href="{{$isEditing ? route('carts.index') : route('carts.index',['edit_product_id'=> $cart->product->id ])}}">

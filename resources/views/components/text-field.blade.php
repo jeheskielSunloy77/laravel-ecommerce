@@ -1,5 +1,4 @@
-@props(['errors', 'wrapperClassName','label' => '', 'type' => 'text'])
-
+@props(['errors', 'wrapperClassName','label' => ''])
 <div class="flex flex-col {{$wrapperClassName ?? ''}}">
     <x-input-label for="{{$attributes['id']}}">
         {{$label}}

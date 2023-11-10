@@ -23,9 +23,7 @@ $cart= $user ? $user -> carts : null;
         </div>
         <div class="relative flex items-center w-1/3">
             <span class="absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-3" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.612 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3l-1.4 1.4ZM9.5 14q1.875 0 3.188-1.313T14 9.5q0-1.875-1.313-3.188T9.5 5Q7.625 5 6.312 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14Z" />
-                </svg>
+                <x-icon-search class="ml-3" />
             </span>
             <form class="w-full block">
                 <input name="search" type="text" placeholder="Search for products" class="w-full shadow-[4px_4px_black] focus:shadow-[6px_6px_black] focus:outline-none transition-shadow block py-2.5 text-gray-700 placeholder-gray-400/70 bg-amber-50 border-2 border-black pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-amber-50 dark:text-gray-300 dark:border-gray-600" value="{{request('search')}}">
@@ -37,9 +35,7 @@ $cart= $user ? $user -> carts : null;
             <div class="flex justify-center md:block">
                 <a class="relative transform transition-all" href="/carts">
                     <button class="flex items-center gap-2 transition-all hover:shadow-[4px_4px_black] p-1.5 border border-transparent hover:border-black">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7 22q-.825 0-1.413-.588T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.588 1.413T7 22Zm10 0q-.825 0-1.413-.588T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.588 1.413T17 22ZM6.15 6l2.4 5h7l2.75-5H6.15ZM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.738.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.988t-.05-1.962L6.6 11.6L3 4H1V2h3.25l.95 2Zm3.35 7h7h-7Z" />
-                        </svg>
+                        <x-icon-cart />
                     </button>
                     @if($cart->count())
                     <span class="absolute top-1 left-1 p-1 text-xs text-white bg-lime-500 rounded-full">
@@ -65,7 +61,7 @@ $cart= $user ? $user -> carts : null;
                                 {{$user->email}}
                             </div>
                         </div>
-                        <ul class="py-2 text-sm" aria-labelledby="dropdownInformationButton">
+                        <ul class="py-2 text-sm">
                             <li>
                                 <a href="/profile" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Profile</a>
                             </li>
@@ -74,6 +70,11 @@ $cart= $user ? $user -> carts : null;
                             </li>
                             <li>
                                 <a href="/transactions" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Transactions</a>
+                            </li>
+                        </ul>
+                        <ul class="py-2 text-sm">
+                            <li>
+                                <a href="/products" class="block px-4 py-2 hover:bg-lime-300 border-y border-transparent hover:border-black">Products List</a>
                             </li>
                         </ul>
                         <form method="POST" action="{{ route('logout')}}" class="py-2">
