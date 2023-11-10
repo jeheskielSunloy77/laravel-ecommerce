@@ -1,4 +1,4 @@
-@section('title', 'Products Broser | Tokolaravel')
+@section('title', 'Products Browser | Tokolaravel')
 
 @php
 $categories = ['clothes', 'shoes', 'sports wear', 'bags', 'hats','watches','jewelery','electronics','kids','furniture','books','cosmetics','health','toys','grocery','stationary'];
