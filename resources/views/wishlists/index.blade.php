@@ -1,6 +1,14 @@
 @section('title', 'User Wishlist | Tokolaravel')
 
 <x-app-layout>
+    @if($wishlists->isEmpty())
+    <div class="border border-black w-full h-[80vh] flex items-center justify-center flex-col shadow-[8px_8px_black]">
+        <h3>No Wishlist Yet</h3>
+        <p class="text-sm text-gray-700">
+            You dont have not wishlisted any product yet, you can save the product you want buy later here.
+        </p>
+    </div>
+    @else
     <div class="gap-4 grid grid-cols-2">
         @foreach ($wishlists as $wishlist)
         <div class="p-4 border border-black flex items-center gap-4 shadow-[4px_4px_#000]">
@@ -37,4 +45,5 @@
         </div>
         @endforeach
     </div>
+    @endif
 </x-app-layout>

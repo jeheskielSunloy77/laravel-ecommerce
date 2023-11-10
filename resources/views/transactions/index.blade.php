@@ -1,6 +1,14 @@
 @section('title', 'Transaction History | Tokolaravel')
 
 <x-app-layout>
+    @if($transactions->isEmpty())
+    <div class="border border-black w-full h-[80vh] flex items-center justify-center flex-col shadow-[8px_8px_black]">
+        <h3>No Transaction Yet</h3>
+        <p class="text-sm text-gray-700">
+            You have not buy anything yet, please continue shopping and buy something.
+        </p>
+    </div>
+    @else
     <div class="gap-4 grid grid-cols-[0.5fr,1fr]">
         <x-primary-card class="h-[60vh] p-4 sticky top-16 space-y-2">
             <span class="text-sm font-bold">
@@ -86,4 +94,5 @@
             @endforeach
         </section>
     </div>
+    @endif
 </x-app-layout>

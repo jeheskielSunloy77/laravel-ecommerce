@@ -1,6 +1,14 @@
 @section('title', 'User Cart | Tokolaravel')
 
 <x-app-layout>
+    @if($carts->isEmpty())
+    <div class="border border-black w-full h-[80vh] flex items-center justify-center flex-col shadow-[8px_8px_black]">
+        <h3>Cart is Empty</h3>
+        <p class="text-sm text-gray-700">
+            Your cart is currently empty, please add some items to the cart.
+        </p>
+    </div>
+    @else
     <div class="gap-4 grid grid-cols-2">
         @foreach ($carts as $cart)
         @php
@@ -64,4 +72,5 @@
         </div>
         @endforeach
     </div>
+    @endif
 </x-app-layout>
