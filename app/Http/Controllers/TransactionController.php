@@ -58,7 +58,7 @@ class TransactionController extends Controller
     {
         $request->validate([
             'rating' => 'required|numeric|min:1|max:5',
-            'review' => 'required|string|min:10'
+            'review' => 'nullable|string|min:10'
         ]);
         $transaction->update([
             'rating' => $request->rating,
