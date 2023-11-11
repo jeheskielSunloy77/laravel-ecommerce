@@ -23,9 +23,9 @@ $sessionStatus = session('status');
                     </span>
                     <span class="flex items-center text-red-700">
                         @for($i=0; $i
-                        <5;$i++) @if($rating <=$i) <x-icon-filed-star class="mb-1" />
+                        <5;$i++) @if($rating <=$i) <x-icon-star class="mb-1" />
                         @else
-                        <x-icon-star class="mb-1" />
+                        <x-icon-filed-star class="mb-1" />
                         @endif
                         @endfor
                     </span>
